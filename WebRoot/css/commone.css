@@ -1,0 +1,105 @@
+body{background:#EEEEEE; font-size:12px !important;}
+td{table-layout:fixed; word-break: break-all; overflow:hidden;}
+.main-page{margin-top:20px;}
+.breadcrumb{margin:70px 0px 0px 0px;}
+.nav{background:#393D49; border:0 none;}
+.nav>li a{color:#fff !important; font-size:12px;}
+.dropdown-menu li a{color:#333333 !important;}
+.navbar-brand{ font-size:14px; margin:0px 10px; color:#fff !important; font-family: 'microsoft yahei'}
+.login-tr{height:50px;}
+.login-key{width:75px; text-align:right; padding-right:10px;}
+.login-input{width:280px;}
+.login-verify-input{width:180px; float:left;}
+.login-verify-img{width:100px; height:35px; padding-left:10px; float:left;}
+.modal-title{font:14px/1.5 tahoma,"microsoft yahei","\5FAE\8F6F\96C5\9ED1","\5B8B\4F53"; font-weight:bold;}
+.empty{border:1px solid red;}
+.data-empty{color:red;}
+.clear{clear:both;}
+
+.float-right{float:right;}
+.float-left{float:left;}
+	
+.new-title{height:40px; text-align:center; line-height:40px; font-weight:bold; font:26px/1.5 tahoma,"microsoft yahei","\5FAE\8F6F\96C5\9ED1","\5B8B\4F53";}
+.new-table-box{padding:20px; width:1170px; background:#fff; margin:20px 0px; border-radius:4px;}
+
+.mandatory{color:red; font-size:14px; font-weight:bold; line-height:12px; padding:0px 4px;}
+.table-key{width:130px; font-weight:bold; text-align:right; line-height:30px;}
+.table-val{padding:2px;width:185px;}
+.table-val input{padding-left:5px; border:0 none;} 
+.table-val input, .table-val select{height:25px; color:#666;}
+.table-val .select{width:100%; border:1px solid #dddddd;}
+.table-val .text{width:100%;}
+.width180{width:180px;}
+.label{height:20px; line-height:20px; color:#000; float:left;}
+.label input{float:left; margin-top:7px; height:auto;}
+.label-text{padding:0px 5px 0px 3px; line-height:27px; font-weight:normal;}
+
+.table-val{padding:2px;}
+.company-name{width:160px;}
+.company-state-date{width:120px;}
+.company-end-date{width:120px;}
+.compnay-jobs{width:180px}
+.company-reason{}
+.compnay-btns{width:80px;}
+
+.empl-photo{width:140px; height:180px;}
+.empl-photo-image{width:100%; height:170px; cursor:pointer;}
+.glyphicon{margin-right:2px;}
+
+
+.address-select{width:125px; border:1px solid #dddddd; margin-right:5px;}
+.address-text{width:315px;}
+
+.td-add-btn{margin:5px 0px 10px 0px;}
+.resize{resize:none;}
+.margin-top-15{margin-top:15px;}
+
+.sm-modal .modal-dialog{width:410px;}
+.sm-modal .modal-content{width:410px;}
+
+.role-modal .modal-dialog{width:530px;}
+.role-modal .modal-content{width:530px;}
+
+.module-table{width:100%}
+.module-tr{height:35px; line-height:35px;}
+.super-module{font-weight:bold; text-align:center; background:#f9f9f9;}
+.child-module{height:35px; line-height:35px; padding-left:20px;}
+.child-module-name{width:100px; text-align:right;}
+.child-module-power label{font-weight:normal; line-height:10px;}
+.child-module-power input{position:relative; top:3px; margin:0px 3px 0px 15px;}
+
+.acctRole{height:35px; line-height:35px; padding:0px 10px;}
+.acctRole label{font-weight:normal; line-height:13px;}
+.acctRole input{float:left; margin:0px 5px 0px 10px;}
+
+.placeholder{color:#999; padding:5px 0px;}
+
+/* 重写bootstrap表单样式 */
+.modal-content{border-radius:3px;}
+.btn{font-size:12px; border-radius:2px;}
+.btn-xs{border-radius:1px;}
+.form-control{font-size:12px; border-radius:2px; padding:0px 6px; box-shadow:none; outline:0 none; line-height:31px; height:31px;}
+textarea.form-control{padding:4px 6px; line-height:16px;}
+input:focus, textarea:focus, select:focus{outline:0 none;}
+.btn-default{background:#e6e6e6; border:1px solid #e6e6e6;}
+.btn-default:hover{background:#d0d0d0; border:1px solid #d0d0d0;}
+.modal-footer{text-align:center; padding:8px;}
+.modal-footer button{margin:0px 5px; padding:6px 20px;}
+.modal-header{padding:12px; background:#337ab7; color:#fff;}
+.bootstrap-dialog .bootstrap-dialog-title{font-size:14px; font-weight:bold;}
+.bootstrap-dialog .bootstrap-dialog-message{font-size:12px; padding:15px 10px; line-height:20px;}
+.container{width:1170px;}
+.btn-xs{margin-left:3px;}
+.table-compnay{margin-bottom:0px;}
+.form-control:focus{outline:none;}
+.default-modal{width:850px;}
+.default-modal .modal-content{width:850px;}
+footer{text-align:center; padding:0px 0px 20px 0px;}
+
+td.si-key{width:100px; padding-right:10px; text-align:right; font-weight:bold;}
+.select{width:130px; margin-right:10px; float:left;}
+.notdate{padding:30px 0px; font-size:14px; line-heigh:25px; text-align:center;}
+
+.hide{display:none;}
+.hidden{ overflow:hidden; white-space:nowrap; text-overflow:ellipsis;}
+.tools{padding:15px 0px; border-bottom:1px solid #e5e5e5;}

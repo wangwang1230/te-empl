@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <meta charset="UTF-8">
+        <title></title>
+        <link type="text/css" rel="stylesheet" href="./css/bootstrap.min.css" />
+		<link type="text/css" rel="stylesheet" href="./css/bootstrap-dialog.min.css">
+        <link type="text/css" rel="stylesheet" href="./css/commone.css" />
+        <script type="text/javascript" src="./js/jquery-1.11.1.min.js"></script>
+        <script type="text/javascript" src="./js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="./js/bootstrap-dialog.min.js"></script>
+        <script type="text/javascript" src="./js/bootstrap-pagy.min.js"></script>
+        <script type="text/javascript" src="./js/common.js"></script>
+        <script type="text/javascript" src="./js/employees_common.js"></script>
+        <script type="text/javascript" src="./js/employees_internship.js"></script>
+        <!--[if lt IE 9]>
+            <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+            <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <div class="nav navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+               <a href="./index.html" class="navbar-brand"><span class="glyphicon glyphicon-home"></span>&nbsp;首页</a>
+               <ul class="nav navbar-nav" id="nav-box-ul"></ul>
+               <ul class="nav navbar-nav pull-right">
+               		<li><a href="./modify_password.html" class="acctInfo" data-toggle="modal" data-target="#modifyPassword"><span class="glyphicon glyphicon-user"></span>&nbsp;</a></li>
+                	<li><a href="javascript:void(0)" onclick="exit()">注销</a></li>
+               </ul>
+            </div>
+        </div>
+        <div class="container main hide">
+            <div class="row">
+	        	<ol class="breadcrumb"></ol>
+				<div class="row main-page">
+					<div class="col-lg-9">
+						<select class="form-control select select-department"><option value=0>请选择部门</option></select>
+						<select class="form-control select select-position"><option value=0>请选择职位</option></select>
+						<div class="input-group">
+							<div class="input-group-btn search-select">
+								<button type="button" class="btn btn-primary dropdown-toggle search-btn" data-toggle="dropdown" name="1" aria-expanded="false">
+									姓名 <span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu float-left" role="menu">
+									<li><a href="#" name='1'>姓名</a></li>
+									<li><a href="#" name='2'>身份证号</a></li>
+								</ul>
+							</div>
+							<input type="text" class="form-control search-val" placeholder="请输入员工姓名或身份证号码" maxlength="64" />
+							<span class="input-group-btn"><button class="btn btn-primary" type="button" onclick="$.search()"><span class="glyphicon glyphicon-search"></span>搜索</button></span>
+						</div><!-- /input-group -->
+					</div>
+					<div class="col-lg-1"></div>
+					<div class="col-lg-2"><button type="button" class="btn btn-primary float-right hide add-empl-btn" onclick="newInternshipEmpl()"><span class="glyphicon glyphicon-plus"></span>新建员工信息</button></div>
+				</div>
+				<table class="table table-bordered table-hover" style="margin-top:20px;">
+					<thead>
+						<th style="width:60px;">编号</th>
+						<th style="width:130px;">姓名</th>
+						<th style="width:50px;">性别</th>
+						<th style="width:150px;">身份证</th>
+						<th style="width:100px;">上岗日期</th>
+						<th style="width:210px;">所属部门</th>
+						<th style="width:190px;">职位</th>
+						<th>操作</th>
+					</thead>
+					<tbody class="tbody-info"></tbody>
+				</table>
+				<nav id="pagination"><ul class="pagination"></ul></nav>
+				<footer>开发者 - TE网络 - <a href="http://www.te5l.com" target="_blank">www.te5L.com</a></footer>
+			</div>
+        </div>
+		
+        <div class="modal fade eliminate-employees-box sm-modal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header"><h4 class="modal-title">员工离职原因</h4></div>
+					<div class="modal-body">
+						<span style="line-height:20px; color:#666;"><b>PS: </b>请填写该员工的淘汰原因, 方便后期查看!!!</span>
+						<textarea class="form-control eliminate-employees-text margin-top-15 resize" rows="7" placeholder="填写该员工的淘汰原因, 方便后期查看, 限500字" maxlength="500"></textarea>
+					</div> 
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+						<button type="button" class="btn btn-primary" onclick="eliminateEmployees()">确认</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+        <div class="modal fade employees-log-box">
+			<div class="modal-dialog default-modal">
+				<div class="modal-content">
+					<div class="modal-header"><h4 class="modal-title">员工记录</h4></div>
+					<div class="modal-body" style="max-height:450px; overflow-y:auto;">
+						<table class="table table-bordered table-hover">
+							<thead>
+								<th style="width:50px;">ID号</th>
+								<th style="width:80px;">类型</th>
+								<th style="width:70px;">操作人</th>
+								<th style="width:140px;">操作时间</th>
+								<th>备注</th>
+							</thead>
+							<tbody class="table-empoyees-box"></tbody>
+						</table>						
+					</div> 
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="modifyPassword" tabindex="-1" role="dialog" aria-labelledby="modifyPasswordLabel" aria-hidden="true">
+			<div class="modal-dialog" style="width:400px;"><div class="modal-content"></div></div>
+		</div>
+		
+    </body>
+</html>

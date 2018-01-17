@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+	http://www.springframework.org/schema/mvc 
+	http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd 
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context-3.0.xsd 
+	http://www.springframework.org/schema/aop 
+	http://www.springframework.org/schema/aop/spring-aop-3.0.xsd 
+	http://www.springframework.org/schema/tx 
+	http://www.springframework.org/schema/tx/spring-tx-3.0.xsd ">
+
+	<!-- 开启注解 -->
+	<mvc:annotation-driven />
+
+	<!-- 扫描组件包 -->
+	<context:component-scan base-package="com.empl.mgr" />
+
+	<!-- 引入外部文件 -->
+	<context:property-placeholder location="classpath:config.properties" />
+
+	<!-- 配置文件上传视图解析器 -->
+	<context:component-scan base-package="org.springframework.web.fileupload" />
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="100000" />
+	</bean>
+
+	<!-- 配置c3p0数据库链接池，数据源 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="${jdbc.driver}"></property>
+		<property name="jdbcUrl" value="${jdbc.url}"></property>
+		<property name="user" value="${jdbc.username}"></property>
+		<property name="password" value="${jdbc.password}"></property>
+		<property name="initialPoolSize" value="${jdbc.initialPoolSize}"></property>
+		<property name="maxPoolSize" value="${jdbc.maxPoolSize}"></property>
+		<property name="minPoolSize" value="${jdbc.minPoolSize}"></property>
+		<property name="maxStatements" value="${jdbc.maxStatements}"></property>
+		<property name="maxStatementsPerConnection" value="${jdbc.maxStatementsPerConnection}"></property>
+		<property name="acquireIncrement" value="${jdbc.acquireIncrement}"></property>
+		<property name="acquireRetryAttempts" value="${jdbc.acquireRetryAttempts}"></property>
+		<property name="autoCommitOnClose" value="${jdbc.autoCommitOnClose}"></property>
+		<property name="acquireRetryDelay" value="${jdbc.acquireRetryDelay}"></property>
+		<property name="maxIdleTimeExcessConnections" value="${jdbc.maxIdleTimeExcessConnections}"></property>
+		<property name="maxIdleTime" value="${jdbc.maxIdleTime}"></property>
+		<property name="idleConnectionTestPeriod" value="${jdbc.idleConnectionTestPeriod}"></property>
+		<property name="breakAfterAcquireFailure" value="${jdbc.breakAfterAcquireFailure}"></property>
+	</bean>
+
+	<!-- 配置sessionFactory -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+				<prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+				<prop key="hibernate.hbm2ddl">${hibernate.hbm2ddl}</prop>
+			</props>
+		</property>
+		<property name="packagesToScan" value="com.empl.mgr.model"></property>
+	</bean>
+
+	<!-- 配置事务 -->
+	<bean id="txManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="nestedTransactionAllowed" value="true"></property>
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<tx:annotation-driven transaction-manager="txManager" />
+
+	<!-- 配置拦截器 -->
+	<mvc:interceptors>
+		<bean class="com.empl.mgr.intercept.SecureValidInterceptor"></bean>
+	</mvc:interceptors>
+
+	<!-- 配置AOP， proxy-target-class代理目标类 -->
+	<aop:config proxy-target-class="true">
+		<!-- 切入点 -->
+		<aop:pointcut id="method" expression="execution(* com.empl.mgr..*(..))" />
+		<!-- 在该切入点使用自定义拦截器 -->
+		<aop:advisor advice-ref="teMethodIntercept" pointcut-ref="method" />
+	</aop:config>
+
+</beans>

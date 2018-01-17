@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="te-empl"
+  id="myeclipse.1462459036417"
+  context-root="/te-empl"
+  j2ee-spec="5.0"
+  archive="te-empl.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+

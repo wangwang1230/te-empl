@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <meta charset="UTF-8">
+        <title></title>
+        <link type="text/css" rel="stylesheet" href="./css/bootstrap.min.css" />
+		<link type="text/css" rel="stylesheet" href="./css/bootstrap-dialog.min.css">
+        <link type="text/css" rel="stylesheet" href="./css/commone.css" />
+        <script type="text/javascript" src="./js/jquery-1.11.1.min.js"></script>
+        <script type="text/javascript" src="./js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="./js/bootstrap-dialog.min.js"></script>
+        <script type="text/javascript" src="./js/bootstrap-pagy.min.js"></script>
+        <script type="text/javascript" src="./js/plugins/my97datepicker/WdatePicker.js"></script>
+        <script type="text/javascript" src="./js/common.js"></script> 
+        <script type="text/javascript" src="./js/employees_training.js"></script>
+        <!--[if lt IE 9]>
+            <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+            <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <div class="nav navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+               <a href="./index.html" class="navbar-brand"><span class="glyphicon glyphicon-home"></span>&nbsp;首页</a>
+               <ul class="nav navbar-nav" id="nav-box-ul"></ul>
+               <ul class="nav navbar-nav pull-right">
+               		<li><a href="./modify_password.html" class="acctInfo" data-toggle="modal" data-target="#modifyPassword"><span class="glyphicon glyphicon-user"></span>&nbsp;</a></li>
+                	<li><a href="javascript:void(0)" onclick="exit()">注销</a></li>
+               </ul>
+            </div>
+        </div>
+        <div class="container main hide">
+            <div class="row">
+            	<ol class="breadcrumb"></ol>
+				<div class="row main-page">
+					<div class="col-lg-8">
+						<div class="input-group">
+							<input type="text" class="form-control searchValue" placeholder="搜索关键字: 培训项目名称" maxlength="64">
+							<span class="input-group-btn"><button class="btn btn-primary" type="button" onclick="search()"><span class="glyphicon glyphicon-search"></span>搜索</button></span>
+						</div><!-- /input-group -->
+					</div>
+					<div class="col-lg-2"></div>
+					<div class="col-lg-2"><button type="button" class="btn btn-primary btn-create hide float-right" onclick="showAddBox()"><span class="glyphicon glyphicon-plus"></span>新建培训项目</button></div>
+				</div>
+				<table class="table table-bordered table-hover" style="margin-top:20px;">
+					<thead>
+						<th style="width:70px;">编号</th>
+						<th style="width:190px;">项目名称</th>
+						<th style="width:70px;">数量 (人)</th>
+						<th style="width:100px;">开始日期</th>
+						<th style="width:100px;">结束日期</th>
+						<th style="width:80px;">中途参加</th>
+						<th style="width:100px;">状态</th>
+						<th style="width:120px;">创建人</th>
+						<th>操作</th>
+					</thead>
+					<tbody class="tbody-list"></tbody>
+				</table>
+				<nav id="pagination"><ul class="pagination"></ul></nav>
+				<footer>开发者 - TE网络 - <a href="http://www.te5l.com" target="_blank">www.te5L.com</a></footer>
+            </div>
+        </div>
+        
+        <div class="modal fade add-box sm-modal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header"><h4 class="modal-title">添加培训项目</h4></div>
+					<div class="modal-body">
+						<input type="text" class="form-control addName" placeholder="培训项目名称" maxlength="64" value="" />
+						<input type="text" class="form-control addStartDate margin-top-15 date-after" placeholder="预计开始时间" maxlength="64" value="" />
+						<input type="text" class="form-control addEndDate margin-top-15 date-after" placeholder="预计结束时间" maxlength="64" value="" />
+						<select class="form-control margin-top-15 addInsertion">
+							<option value="true">允许中途参加培训</option>
+							<option value="false" selected="selected">不允许中途参加培训</option>
+						</select>
+						<textarea class="form-control addDesc margin-top-15 resize" rows="3" placeholder="员工培训项目简介信息" maxlength="128"></textarea>
+					</div> 
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+						<button type="button" class="btn btn-primary" onclick="addTraining()">添加</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+        <div class="modal fade details-box sm-modal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header"><h4 class="modal-title">培训项目详情</h4></div>
+					<div class="modal-body">
+						<table class="table table-bordered table-striped">
+							<tr><td class="si-key">ID号: </td><td class="trainingitem-id"></td></tr>
+							<tr><td class="si-key">项目名称: </td><td class="trainingitem-name"></td></tr>
+							<tr><td class="si-key">状态: </td><td class="trainingitem-state"></td></tr>
+							<tr><td class="si-key">开始时间: </td><td class="trainingitem-start"></td></tr>
+							<tr><td class="si-key">结束日期: </td><td class="trainingitem-end"></td></tr>
+							<tr><td class="si-key">允许中途参加: </td><td class="trainingitem-insertion"></td></tr>
+							<tr><td class="si-key">创建日期: </td><td class="trainingitem-create"></td></tr>
+							<tr class="trainingitem-result"><td class="si-key">培训结果: </td><td class="trainingitem-result"></td></tr>
+							<tr><td class="si-key">项目简介: </td><td class="trainingitem-description"></td></tr>
+						</table>
+					</div> 
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+        
+        <div class="modal fade modify-box sm-modal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header"><h4 class="modal-title">修改培训项目</h4></div>
+					<div class="modal-body">
+						<input type="text" class="form-control modifyName" placeholder="培训项目名称" maxlength="64" value="" />
+						<input type="text" class="form-control modifyStartDate margin-top-15 date-after" placeholder="预计开始时间" maxlength="64" value="" />
+						<input type="text" class="form-control modifyEndDate margin-top-15 date-after" placeholder="预计结束时间" maxlength="64" value="" />
+						<select class="form-control margin-top-15 modifyInsertion">
+							<option value="true">允许中途参加培训</option>
+							<option value="false">不允许中途参加培训</option>
+						</select>
+						<textarea class="form-control modifyDesc margin-top-15 resize" rows="3" placeholder="员工培训项目简介信息" maxlength="128"></textarea>
+					</div> 
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+						<button type="button" class="btn btn-primary" onclick="modifyTraining()">修改</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+        <div class="modal fade stop-box sm-modal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header"><h4 class="modal-title">完成培训项目</h4></div>
+					<div class="modal-body">
+						<span style="line-height:20px; color:#666;"><b>PS: </b>请您针对本次培训的情况, 如实填写培训结果!!!</span>
+						<input type="text" class="form-control stop-enddate date-after" placeholder="结束时间" maxlength="64" value="" />
+						<textarea class="form-control stop-note margin-top-15 resize" rows="7" placeholder="请填写本次培训结果, 限1000字" maxlength="1000"></textarea>
+					</div> 
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+						<button type="button" class="btn btn-primary" onclick="stop()">确认</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+        <div class="modal fade record-box">
+			<div class="modal-dialog default-modal">
+				<div class="modal-content">
+					<div class="modal-header"><h4 class="modal-title">报名记录</h4></div>
+					<div class="modal-body record-modal-body" style="max-height:450px; overflow-y:auto;">
+						<button type="button" class="btn btn-success add-empl-btn hide" style="margin-bottom:15px;" onclick="showAddEmplBox()">添加员工</button>
+						<table class="table table-bordered table-hover table-record-list hide">
+							<thead>
+								<th style="width:70px;">编号</th>
+								<th style="width:120px;">员工姓名</th>
+								<th style="width:100px;">性别</th>
+								<th style="width:160px;">身份证</th>
+								<th style="width:120px;">报名时间</th>
+								<th style="width:100px;">培训状态</th>
+								<th>操作</th>
+							</thead>
+							<tbody class="record-list"></tbody>
+						</table>
+					</div> 
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" onclick="closeApplyRecord()">关闭</button> 
+					</div>
+				</div>
+			</div>
+		</div>
+		
+        <div class="modal fade add-empl-box bs-example-modal-lg">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header"><h4 class="modal-title">添加员工名单</h4></div>
+					<div class="modal-body" style="max-height:450px; overflow-y:auto;">
+						<div class="tool">
+							<select class="form-control select select-department"><option value=0>请选择部门</option></select>
+							<div class="input-group float-left">
+								<input type="text" class="form-control search-val" style="width:350px;" placeholder="请输入员工姓名或身份证号码" maxlength="64" />
+								<button class="btn btn-primary" type="button" onclick="findEmployeesList()"><span class="glyphicon glyphicon-search"></span>搜索</button>
+							</div><!-- /input-group -->
+							<button class="btn btn-primary float-right" type="button" onclick="addAllTraining()"><span class="glyphicon glyphicon-plus"></span>添加所有</button>
+							<div class="clear"></div>
+						</div>
+						<table class="table table-bordered table-hover margin-top-15">
+							<thead>
+								<th style="width:70px;">编号</th>
+								<th style="width:100px;">姓名</th>
+								<th style="width:50px;">性别</th>
+								<th style="width:200px;">身份证号</th>
+								<th style="width:140px;">所属部门</th>
+								<th style="width:120px;">出生日期</th>
+								<th>操作</th>
+							</thead>
+							<tbody class="empl-list-tboal"></tbody>
+						</table>
+					</div> 
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" onclick="closeEmplListBox()">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+        <div class="modal fade stop-training-box sm-modal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header"><h4 class="modal-title">停止员工培训</h4></div>
+					<div class="modal-body">
+						<span style="line-height:20px; color:#666;"><b>PS: </b>请填写该员工停止培训的原因!!!</span>
+						<textarea class="form-control stop-training-text margin-top-15 resize" rows="7" placeholder="请填写该员工停止培训的原因, 限500字" maxlength="500"></textarea>
+					</div> 
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+						<button type="button" class="btn btn-primary" onclick="stopEmployeesTraining()">停止</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+        <div class="modal fade evaluation-training-box sm-modal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header"><h4 class="modal-title">员工培训评分</h4></div>
+					<div class="modal-body">
+						<span style="line-height:20px; color:#666;"><b>PS: </b>请填写对该员工的培训评价!!!</span>
+						<textarea class="form-control evaluation-training-text margin-top-15 resize" rows="7" placeholder="请填写对该员工的培训评价, 限500字" maxlength="500"></textarea>
+					</div> 
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+						<button type="button" class="btn btn-primary" onclick="evaluationEmployeesTraining()">评分</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="modifyPassword" tabindex="-1" role="dialog" aria-labelledby="modifyPasswordLabel" aria-hidden="true">
+			<div class="modal-dialog" style="width:400px;"><div class="modal-content"></div></div>
+		</div>
+		
+    </body>
+</html>

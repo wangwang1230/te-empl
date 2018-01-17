@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <meta charset="UTF-8">
+        <title></title>
+        <link type="text/css" rel="stylesheet" href="./css/bootstrap.min.css" />
+		<link type="text/css" rel="stylesheet" href="./css/bootstrap-dialog.min.css">
+        <link type="text/css" rel="stylesheet" href="./css/commone.css" />
+        <script type="text/javascript" src="./js/jquery-1.11.1.min.js"></script>
+        <script type="text/javascript" src="./js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="./js/bootstrap-dialog.min.js"></script>
+        <script type="text/javascript" src="./js/bootstrap-pagy.min.js"></script>
+        <script type="text/javascript" src="./js/common.js"></script>
+        <script type="text/javascript" src="./js/plugins/my97datepicker/WdatePicker.js"></script>
+        <script type="text/javascript" src="./js/employees_info.js"></script>
+        <!--[if lt IE 9]>
+            <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+            <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]--> 
+    </head>
+    <body>
+        <div class="nav navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+               <a href="./index.html" class="navbar-brand"><span class="glyphicon glyphicon-home"></span>&nbsp;首页</a>
+               <ul class="nav navbar-nav" id="nav-box-ul"></ul>
+               <ul class="nav navbar-nav pull-right">
+               		<li><a href="./modify_password.html" class="acctInfo" data-toggle="modal" data-target="#modifyPassword"><span class="glyphicon glyphicon-user"></span>&nbsp;</a></li>
+                	<li><a href="javascript:void(0)" onclick="exit()">注销</a></li>
+               </ul>
+            </div>
+        </div>
+        <div class="container main hide">
+        	<div class="row">
+	      		<ol class="breadcrumb"></ol>
+	       		<div class="new-table-box edit-employees-box hide">
+	       			<div class="col-row-12 new-title">新增实习员工信息</div>
+	       			<div style="line-height:48px;">
+	       				带 <span class="mandatory">*</span> 为必填项
+	       				<button type="button" class="btn btn-info td-add-btn float-right" onclick="saveEmployeesInfo()"><span class="glyphicon glyphicon-th"></span>保存或修改员工信息</button>
+	       			</div>
+	       			<table class="table table-bordered">
+	       				<tr>
+	       					<td class="table-key"><span class="mandatory">*</span>姓名：</td>
+	       					<td class="table-val"><input type="text" class="width180 text fullName" maxlength="18" placeholder="姓名" /></td>
+	       					<td class="table-key"><span class="mandatory">*</span>性别：</td> 
+	       					<td class="table-val" colspan="4">
+	       						<label class="label"><input type="radio" class="sex" value="false" name="sex" checked="checked" /><span class="label-text float-left">男</span></label>
+	       						<label class="label"><input type="radio" class="sex" value="true" name="sex" /><span class="label-text float-left">女</span></label>
+	       					</td>
+	       					<td class="table-val empl-photo" rowspan="5"></td>
+	       				</tr>
+	       				<tr>
+	       					<td class="table-key"><span class="mandatory">*</span>身份证号：</td>
+	       					<td class="table-val"><input type="text" class="width180 text identity" maxlength="18" placeholder="身份证号" /></td>
+	       					<td class="table-key"><span class="mandatory">*</span>出生年月：</td>
+	       					<td class="table-val"><input type="text" class="width180 text date-before birthday" placeholder="出生年月" /></td>
+	       					<td class="table-key">社保卡号：</td>
+	       					<td class="table-val"><input type="text" class="width180 text social-security" maxlength="18" placeholder="社保卡号 (非必填项)" /></td>
+	       				</tr>
+	       				<tr>
+	       					<td class="table-key"><span class="mandatory">*</span>部门：</td>
+	       					<td class="table-val"><select class="select department"><option value=0>请选择部门</option></select></td>
+	       					<td class="table-key"><span class="mandatory">*</span>职位：</td>
+	       					<td class="table-val"><select class="select position"></select></td>
+	       					<td class="table-key"><span class="mandatory">*</span>入职日期：</td>
+	       					<td class="table-val"><input type="text" class="width180 text date participate" placeholder="入职日期" /></td> 
+	       				</tr>
+	       				<tr>
+	       					<td class="table-key"><span class="mandatory">*</span>文化程度：</td>
+	       					<td class="table-val educationList" colspan="5"></td>
+	       				</tr>
+	       				<tr>
+	       					<td class="table-key"><span class="mandatory">*</span>婚姻状况：</td>
+	       					<td class="table-val marriageList" colspan="5"></td>
+	       				</tr>
+	       				<tr>
+	       					<td class="table-key"><span class="mandatory">*</span>政治面貌：</td>
+	       					<td class="table-val politicsList" colspan="7"></td>
+	       				</tr>
+	       				<tr>
+	       					<td class="table-key"><span class="mandatory">*</span>民族：</td>
+	       					<td class="table-val nationalList" colspan="7"></td>
+	       				</tr>
+	       			</table>
+	       			
+	       			<table class="table table-bordered">
+	       				<tr>
+	       					<td class="table-key text-register"><span class="mandatory">*</span>户籍地址：</td>
+	       					<td class="table-val" colspan="7">
+	       						<select class="address-select register-province"><option value=0>请选择</option></select>
+	       						<select class="address-select register-city"><option value=0>请选择</option></select>
+	       						<select class="address-select register-county"><option value=0>请选择</option></select>
+	       						<select class="address-select register-township"><option value=0>请选择</option></select>
+	       						<select class="address-select register-village"><option value=0>请选择</option></select>
+	       						<input type="text" class="address-text register-detailed" maxlength="64" placeholder="详细地址" />
+	       					</td>
+	       				</tr>
+	       				<tr>
+	       					<td class="table-key text-current"><span class="mandatory">*</span>现居住地址：</td>
+	       					<td class="table-val" colspan="7">
+	       						<select class="address-select current-province"><option value=0>请选择</option></select>
+	       						<select class="address-select current-city"><option value=0>请选择</option></select>
+	       						<select class="address-select current-county"><option value=0>请选择</option></select>
+	       						<select class="address-select current-township"><option value=0>请选择</option></select>
+	       						<select class="address-select current-village"><option value=0>请选择</option></select>
+	       						<input type="text" class="address-text current-detailed" maxlength="64" placeholder="详细地址" />
+	       					</td>
+	       				</tr>
+	       			</table>
+	       			
+	       			<table class="table table-bordered">
+	       				<tr>
+	       					<td class="table-key"><span class="mandatory">*</span>手机号码：</td>
+	       					<td class="table-val" colspan="1"><input type="text" class="width180 text phone" maxlength="11" placeholder="手机号码" /></td>
+	       					<td class="table-key"><span class="mandatory">*</span>其他联系方式：</td>
+	       					<td class="table-val" colspan="4"><input type="text" class="width180 text contact" maxlength="128" placeholder="其他联系方式" /></td>
+	       				</tr>
+	       				<tr>
+	       					<td class="table-key"><span class="mandatory">*</span>紧急联系人：</td>
+	       					<td class="table-val" colspan="1"><input type="text" class="width180 text emergencyContact" maxlength="24" placeholder="紧急联系人" /></td>
+	       					<td class="table-key"><span class="mandatory">*</span>紧急电话：</td>
+	       					<td class="table-val" colspan="4"><input type="text" class="width180 text emergencyPhone" maxlength="256" placeholder="紧急电话" /></td>
+	       				</tr>
+	       				<tr>
+	       					<td class="table-key">毕业院校：</td>
+	       					<td class="table-val" colspan="1"><input type="text" class="width180 text school" maxlength="256" placeholder="毕业院校 (非必填项)" /></td>
+	       					<td class="table-key">所学专业：</td>
+	       					<td class="table-val" colspan="4"><input type="text" class="width180 text professional" maxlength="256" placeholder="所学专业 (非必填项)" /></td>
+	       				</tr> 
+	       				<tr>
+	       					<td class="table-key">毕业时间：</td>
+	       					<td class="table-val" colspan="1"><input type="text" class="width180 text date-before graduationTime" placeholder="毕业时间 (非必填项)" /></td>
+	       					<td class="table-key">学历：</td>
+	       					<td class="table-val" colspan="2"><input type="text" class="width180 text schooling" maxlength="128" placeholder="学历 (非必填项)" /></td>
+	       					<td class="table-key">获得学位：</td>
+	       					<td class="table-val" colspan="2"><input type="text" class="width180 text degree" maxlength="128" placeholder="学位 (非必填项)" /></td>
+	       				</tr>
+	       				<tr>
+	       					<td class="table-key"><span class="mandatory">*</span>是否缴纳社保：</td>
+	       					<td class="table-val" colspan="7">
+	       						<label class="label"><input type="radio" class="isSocialSecurity" value="true" name="insurance" /><span class="label-text float-left">是</span></label>
+	       						<label class="label"><input type="radio" class="isSocialSecurity" value="false" name="insurance" checked="checked" /><span class="label-text float-left">否</span></label>
+	       					</td>
+	       				</tr>
+	       				<tr>
+	       					<td class="table-key">备注：</td>
+	       					<td class="table-val" colspan="7"><input type="text" class="width180 text note" maxlength="1024" placeholder="备注" /></td>
+	       				</tr>
+	       			</table>
+	       			
+	       			<table class="table table-bordered">
+	       				<tr>
+	       					<td class="table-key">
+	       						前工作经历：
+	       						<button type="button" class="btn btn-info btn-xs td-add-btn" onclick="$.addCompany()">添加新单位</button>
+	       					</td>
+	       					<td class="table-val" colspan="7">
+	       						<table class="table table-bordered table-compnay">
+	       							<thead>
+	       								<tr>
+		       								<th class="company-name">单位名称</th>
+		       								<th class="company-state-date">入职时间</th> 
+		       								<th class="company-end-date">离职时间</th>
+		       								<th class="company-jobs">岗位</th>
+		       								<th class="company-reason">离职原因</th>
+		       								<th class="company-btns">操作</th>
+	       								</tr>
+	       							</thead>
+	       							<tbody class="company-list">
+	       								<tr class="compnay-tr">
+	       									<td><input type="text" maxlength="64" class="width180 text cp-name" placeholder="单位名称" /></td>
+	       									<td><input type="text" class="width180 text date-before cp-state-date" placeholder="入职时间" /></td>
+	       									<td><input type="text" class="width180 text date-before cp-end-date" placeholder="离职时间" /></td>
+	       									<td><input type="text" maxlength="64" class="width180 text cp-jobs" placeholder="岗位" /></td>
+	       									<td><input type="text" maxlength="512" class="width180 text cp-reason" placeholder="离职原因" /></td>
+	       									<td><button type="button" class="btn btn-default btn-xs" onclick="$.delCompnay(this)">删除</button></td>
+	       								</tr>
+	       							</tbody>
+	       						</table>
+	       					</td>
+	       				</tr>
+	       			</table>
+	       			<div style="padding:10px; background:#fafafa; border:1px solid #ccc;"> 
+	       				1.此表作为公司人力资源记录，将被用于人力资源管理相关事宜，请认真据实填写。<br />
+	       				2.此表由公司组织定期填写，其间如有重要变更请及时通知人力资源部。
+	       			</div>
+	       		</div>
+        	</div>
+			<footer>开发者 - TE网络 - <a href="http://www.te5l.com" target="_blank">www.te5L.com</a></footer>
+       	</div>
+		<div class="modal fade" id="modifyPassword" tabindex="-1" role="dialog" aria-labelledby="modifyPasswordLabel" aria-hidden="true">
+			<div class="modal-dialog" style="width:400px;"><div class="modal-content"></div></div>
+		</div>
+		
+    </body>
+</html>
